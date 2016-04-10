@@ -20,41 +20,31 @@ var lib_gp_helper = {
 		var svalue = location.search.match(new RegExp("[\?\&]" + item + "=([^\&]*)(\&?)","i"));
 		return svalue ? svalue[1] : svalue;
 	},
-	
+
 	removeOptions: function(selectbox) {
 		var i;
 		for(i=selectbox.options.length-1;i>=0;i--) {
 			selectbox.remove(i);
 		}
 	},
-	
+
 	setType: function(type) {
 		// set html and css for respective controllertype
 	},
-	
+
 	setCSS: function(url) {
-		if (!url.endsWith(".css")) {
-			url = url + ".css"
-		}
-		console.log("Loading stylesheet: " + url)
+		if (!url.endsWith(".css"))
+			url = url + ".css";
+
+		console.log("Loading stylesheet: " + url);
 		var ss = document.createElement("link");
 		ss.type = "text/css";
 		ss.rel = "stylesheet";
 		ss.href = url;
 		document.getElementsByTagName("head")[0].appendChild(ss);
 	},
-	
+
 	getAllGamepads: function() {
-		var rawGamepads = navigator.getGamepads ? navigator.getGamepads() : ( navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : null );
-		if(rawGamepads) {
-			lib_gamepad.gamepads = [];
-			for (var i = 0; i < rawGamepads.length; i++) {
-				console.log(rawGamepads[i]);
-				lib_gamepad.gamepads.push(rawGamepads[i]);
-			}
-			return rawGamepads
-		} else {
-			return null
-		}
+		return navigator.getGamepads ? navigator.getGamepads() : ( navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : null );
 	}
-}
+};

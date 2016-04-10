@@ -1,12 +1,11 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:200,400,500';
 
+/* TODO; Clean this shit up */
 body {
-  -webkit-font-smoothing: antialiased;
-
-  margin: 0;
-  padding: 0;
-  
-  background: rgb(240, 240, 240);
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    background: rgb(240, 240, 240);
 }
 
 /* Error messages. */
@@ -101,11 +100,11 @@ body {
   background-position: 50%;
   background-image: url(../images/shoulder-top.png);
 }
-.buttons > [name='button-left-shoulder-top'] {
+.buttons > .button-left-shoulder-top {
   left: 185px;
   top: 66px;
 }
-.buttons > [name='button-right-shoulder-top'] {
+.buttons > .button-right-shoulder-top {
   left: 618px;
   top: 64px;
 }
@@ -125,11 +124,11 @@ body {
   background-position: 50%;
   background-image: url(../images/shoulder-bottom.png);
 }
-.buttons > [name='button-left-shoulder-bottom'] {
+.buttons > .button-left-shoulder-bottom {
   left: 185px;
   top: 46px;
 }
-.buttons > [name='button-right-shoulder-bottom'] {
+.buttons > .button-right-shoulder-bottom {
   left: 618px;
   top: 44px;
 }
@@ -154,43 +153,43 @@ body {
   right: 5px;
   bottom: 5px;
 }
-.buttons > [name='button-0'] {
+.buttons > .button-0 {
   left: 676px;
   top: 241px;
   background-image: url(../images/button-0.png);
 }
-.buttons > [name='button-1'] {
+.buttons > .button-1 {
   left: 718px;
   top: 200px;
   background-image: url(../images/button-1.png);
 }
-.buttons > [name='button-2'] {
+.buttons > .button-2 {
   left: 635px;
   top: 200px;
   background-image: url(../images/button-2.png);
 }
-.buttons > [name='button-3'] {
+.buttons > .button-3 {
   left: 677px;
   top: 158px;
   background-image: url(../images/button-3.png);
 }
 
-.buttons > [name='button-dpad-bottom'] {
+.buttons > .button-dpad-bottom {
   left: 246px;
   top: 242px;
   background-image: url(../images/button-down.png);
 }
-.buttons > [name='button-dpad-right'] {
+.buttons > .button-dpad-right {
   left: 286px;
   top: 201px;
   background-image: url(../images/button-right.png);
 }
-.buttons > [name='button-dpad-left'] {
+.buttons > .button-dpad-left {
   left: 203px;
   top: 201px;
   background-image: url(../images/button-left.png);
 }
-.buttons > [name='button-dpad-top'] {
+.buttons > .button-dpad-top {
   left: 244px;
   top: 159px;
   background-image: url(../images/button-up.png);
@@ -215,11 +214,11 @@ body {
   right: 24px;
   bottom: 25px;
 }
-.buttons > [name='button-select'] {
+.buttons > .button-select {
   left: 388px;
   top: 178px;
 }
-.buttons > [name='button-start'] {
+.buttons > .button-start {
   left: 492px;
   top: 178px;
 }
@@ -247,11 +246,11 @@ body {
   bottom: 54px;
 }
 
-.buttons > [name='stick-1'] {
+.buttons > .stick-1 {
   left: 286px;
   top: 243px;
 }
-.buttons > [name='stick-2'] {
+.buttons > .stick-2 {
   left: 495px;
   top: 243px;
 }

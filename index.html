@@ -23,7 +23,7 @@
 
 <div id='no-gamepad-support'>
   Your browser does not seem to support Gamepad API, or it might be
-  we’re not detecting it very well. Sorry!
+  weï¿½re not detecting it very well. Sorry!
 </div>
 <div id='no-gamepads-connected'>
   No gamepads seem to be connected. Be sure to plug in a gamepad and then
@@ -32,39 +32,40 @@
 
 <div class="gamepad">
 	<div class='buttons'>
-		<div class='face' name='button-0' id="button-0"></div>
-		<div class='face' name='button-1' id="button-1"></div>
-		<div class='face' name='button-2' id="button-2"></div>
-		<div class='face' name='button-3' id="button-3"></div>
+		<div class='face button-0'></div>
+		<div class='face button-1'></div>
+		<div class='face button-2'></div>
+		<div class='face button-3'></div>
 
-		<div class='top-shoulder' name='button-left-shoulder-top' id="button-4"></div>
-		<div class='top-shoulder' name='button-right-shoulder-top' id="button-5"></div>
-		<div class='bottom-shoulder' name='button-left-shoulder-bottom' id="button-6"></div>
-		<div class='bottom-shoulder' name='button-right-shoulder-bottom' id="button-7"></div>
+		<div class='top-shoulder button-left-shoulder-top button-4'></div>
+		<div class='top-shoulder button-right-shoulder-top button-5'></div>
+		<div class='bottom-shoulder button-left-shoulder-bottom button-6'></div>
+		<div class='bottom-shoulder button-right-shoulder-bottom button-7'></div>
 
-		<div class='select-start' name='button-select' id="button-8"></div>
-		<div class='select-start' name='button-start' id="button-9"></div>
+		<div class='select-start button-select button-8'></div>
+		<div class='select-start button-start button-9'></div>
 
-		<div class='stick stick-0 stick-1' name='stick-1' id="button-10"></div>
-		<div class='stick stick-2 stick-3' name='stick-2' id="button-11"></div>
+		<div class='stick stick-0 stick-1 button-10'></div>
+		<div class='stick stick-2 stick-3 button-11'></div>
 
-		<div class='face' name='button-dpad-top' id="button-12"></div>
-		<div class='face' name='button-dpad-bottom' id="button-13"></div>
-		<div class='face' name='button-dpad-left' id="button-14"></div>
-		<div class='face' name='button-dpad-right' id="button-15"></div>
+		<div class='face button-dpad-top button-12'></div>
+		<div class='face button-dpad-bottom button-13'></div>
+		<div class='face button-dpad-left button-14'></div>
+		<div class='face button-dpad-right button-15'></div>
 	</div>
 	<div class='index'></div>
 </div>
 <script>
 // Global variables starts here
 // DO NOT TOUCH
-var gamepads = [];
-// DO NOT TOUCH, UNLESS YOU WANT TO
+var gamepads = lib_gp_helper.getAllGamepads(); // Get all gamepads if we need to debug something or do polling
+// DO NOT TOUCH, UNLESS YOU DO WANT TO
 var STICK_OFFSET = 25;
 var ANALOGUE_BUTTON_THRESHOLD = .5;
 // DO TOUCH
 var deadzone_threshold = 0.01;
-var gamepad_type = "css/generic";
+var gamepad_type = "generic";
+var gamepad_style = "css/generic"
 var gamepad_index =  0;
 
 // Helpers
@@ -78,7 +79,7 @@ var rAFStop = window.mozCancelRequestAnimationFrame ||
 
 // Events starts here
 window.addEventListener("gamepadconnected", function() {
-  var gp = navigator.getGamepads()[0];
+  var gp = gamepads[gamepad_index];
   console.log("Gamepad connected at index " + gp.index + ": " + gp.id + ". It has " + gp.buttons.length + " buttons and " + gp.axes.length + " axes.");
   gameLoop();
 });
@@ -93,8 +94,8 @@ window.addEventListener("gamepaddisconnected", function() {
 * Handle GET's. Also sets a defaults CSS
 */
 function SetParams() {
-	if (lib_gp_helper.Requests("ID")) {
-		gamepadIndex = lib_gp_helper.Requests("ID");
+	if (lib_gp_helper.Requests("ID")) { // Refers to gamepad's API gamepad.index
+		gamepad_index = lib_gp_helper.Requests("ID");
 	}
 	if (lib_gp_helper.Requests("deadzone")) {
 		deadzone_threshold = lib_gp_helper.Requests("deadzone");
@@ -105,15 +106,15 @@ function SetParams() {
 	if (lib_gp_helper.Requests("style")) {
 		lib_gp_helper.setCSS(lib_gp_helper.Requests("style"));
 	} else {
-		lib_gp_helper.setCSS(gamepad_type);
+		lib_gp_helper.setCSS(gamepad_style);
 	}
 }
 
 /**
 * Poll all gamepads (if browser does not support gamepad events)
+* Rewrite to only poll wanted index
 */
 function pollGamepads() {
-  var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
   for (var i = 0; i < gamepads.length; i++) {
     var gp = gamepads[i];
     if(gp) {
@@ -128,10 +129,10 @@ function pollGamepads() {
 * Update all buttons and axis.
 */
 function gameLoop() {
-  var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+	gamepads = lib_gp_helper.getAllGamepads(); // Important to update gamepads first thing every tick
   if (!gamepads)
     return;
-  var gp = gamepads[0];
+  var gp = gamepads[gamepad_index];
 
   for (var i = 0; i <= gp.buttons.length; i++) {
 		//console.log("pressed button" + i);
@@ -162,7 +163,7 @@ function updateButton(button, id) {
 	}
 
 	// Update the button visually.
-	var buttonEl = document.querySelector('#button-' + id);
+	var buttonEl = document.querySelector('.button-' + id);
 	if (buttonEl) { // Extraneous buttons have just a label.
 		if (pressed) {
 			//console.log("pressed button" + id)
@@ -193,11 +194,11 @@ function updateAxis(value, stickId) {
 }
 
 // Program starts here
-console.log("init")
+console.log("init");
 SetParams();
 
 if(!('GamepadEvent' in window)) {
-  console.log("no gamepad events available")
+  console.log("no gamepad events available");
   // Browser does not support gamepad events, poll instead.
   var interval = setInterval(pollGamepads, 500);
 } else {
@@ -205,8 +206,7 @@ if(!('GamepadEvent' in window)) {
 	console.log("gamepad events available")
 }
 
-var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
-if (gamepads[0] !== undefined) { // Refresh does not redefine gamepads. (fixes refreshing page)
+if (gamepads[0] !== undefined) { // Refresh does not redefine gamepads. (fixes refreshing page bug)
 	console.log("gamepads already connected");
 	gameLoop();
 }
