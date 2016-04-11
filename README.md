@@ -12,13 +12,13 @@ Data from [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/W
 
 #Todo
 - [x] Dynamic CSS
-- [ ] Selectable gamepad
-- [ ] Changeable deadzone
+- [x] Selectable gamepad
+- [x] Changeable deadzone
 - [ ] Add playstation 3 controller skin css
 - [ ] Add Xbox360 controller skin css
 - [ ] URL generator
 - [ ] Rewrite to dynamically generate html based on style
-- [ ] Autodetect gamepad style from gamepad name
+- [x] Autodetect gamepad style from gamepad name
 - [ ] Scalable images (svg's)
 - [ ] Add more console skins
 - [ ] Skin for Thrustmaster Warthog stick and throttle

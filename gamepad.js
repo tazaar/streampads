@@ -27,9 +27,22 @@ var lib_gp_helper = {
 			selectbox.remove(i);
 		}
 	},
+	
+	getGamepadType: function(id) {
+		console.log(id)
+		if (id.indexOf("Xbox 360") > -1 )
+			return "x360";
+		else if (id.indexOf("SIXAXIS") > -1 )
+			return "ps3";
+		else
+			return "generic";
+	},
 
-	setType: function(type) {
-		// set html and css for respective controllertype
+	setTypeAndStyle: function(type, css) {
+        if(css == "")
+            lib_gp_helper.setCSS("css/" + type);
+        else
+            lib_gp_helper.setCSS(css);
 	},
 
 	setCSS: function(url) {
