@@ -1,6 +1,5 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:200,400,500';
 
-/* TODO; Clean this shit up */
 body {
     -webkit-font-smoothing: antialiased;
     margin: 0;
@@ -76,7 +75,7 @@ body {
 
 /* Buttons. */
 
-.buttons > ::after {
+.gamepad > ::after {
   position: absolute;
   content: '';
   border-radius: 100%;
@@ -84,10 +83,10 @@ body {
 
   opacity: 0;
 }
-.buttons > .pressed::after {
+.gamepad > .pressed::after {
   opacity: .5;
 }
-.buttons > .top-shoulder {
+.gamepad > .top-shoulder {
   width: 170px;
   height: 70px;
 
@@ -100,18 +99,18 @@ body {
   background-position: 50%;
   background-image: url(../images/shoulder-top.png);
 }
-.buttons > .button-left-shoulder-top {
+.gamepad > .button-left-shoulder-top {
   left: 185px;
   top: 66px;
 }
-.buttons > .button-right-shoulder-top {
+.gamepad > .button-right-shoulder-top {
   left: 618px;
   top: 64px;
 }
-.buttons > .top-shoulder.pressed {
+.gamepad > .top-shoulder.pressed {
   margin-top: 5px;
 }
-.buttons > .bottom-shoulder {
+.gamepad > .bottom-shoulder {
   width: 170px;
   height: 70px;
 
@@ -124,18 +123,18 @@ body {
   background-position: 50%;
   background-image: url(../images/shoulder-bottom.png);
 }
-.buttons > .button-left-shoulder-bottom {
+.gamepad > .button-left-shoulder-bottom {
   left: 185px;
   top: 46px;
 }
-.buttons > .button-right-shoulder-bottom {
+.gamepad > .button-right-shoulder-bottom {
   left: 618px;
   top: 44px;
 }
-.buttons > .bottom-shoulder.pressed {
+.gamepad > .bottom-shoulder.pressed {
   margin-top: 5px;
 }
-.buttons > .face {
+.gamepad > .face {
   width: 50px;
   height: 50px;
 
@@ -147,54 +146,54 @@ body {
   background-repeat: no-repeat;
   background-position: 50%;
 }
-.buttons > .face::after {
+.gamepad > .face::after {
   left: 5px;
   top: 5px;
   right: 5px;
   bottom: 5px;
 }
-.buttons > .button-0 {
+.gamepad > .button-0 {
   left: 676px;
   top: 241px;
   background-image: url(../images/button-0.png);
 }
-.buttons > .button-1 {
+.gamepad > .button-1 {
   left: 718px;
   top: 200px;
   background-image: url(../images/button-1.png);
 }
-.buttons > .button-2 {
+.gamepad > .button-2 {
   left: 635px;
   top: 200px;
   background-image: url(../images/button-2.png);
 }
-.buttons > .button-3 {
+.gamepad > .button-3 {
   left: 677px;
   top: 158px;
   background-image: url(../images/button-3.png);
 }
 
-.buttons > .button-dpad-bottom {
+.gamepad > .button-dpad-bottom {
   left: 246px;
   top: 242px;
   background-image: url(../images/button-down.png);
 }
-.buttons > .button-dpad-right {
+.gamepad > .button-dpad-right {
   left: 286px;
   top: 201px;
   background-image: url(../images/button-right.png);
 }
-.buttons > .button-dpad-left {
+.gamepad > .button-dpad-left {
   left: 203px;
   top: 201px;
   background-image: url(../images/button-left.png);
 }
-.buttons > .button-dpad-top {
+.gamepad > .button-dpad-top {
   left: 244px;
   top: 159px;
   background-image: url(../images/button-up.png);
 }
-.buttons > .select-start {
+.gamepad > .select-start {
   width: 90px;
   height: 90px;
 
@@ -208,24 +207,24 @@ body {
 
   background-image: url(../images/button-select-start.png);
 }
-.buttons > .select-start::after {
+.gamepad > .select-start::after {
   left: 25px;
   top: 25px;
   right: 24px;
   bottom: 25px;
 }
-.buttons > .button-select {
+.gamepad > .button-select {
   left: 388px;
   top: 178px;
 }
-.buttons > .button-start {
+.gamepad > .button-start {
   left: 492px;
   top: 178px;
 }
 
 /* Sticks. */
 
-.buttons > .stick {
+.gamepad > .stick {
   width: 190px;
   height: 190px;
 
@@ -239,18 +238,18 @@ body {
 
   background-image: url(../images/stick.png);
 }
-.buttons > .stick::after {
+.gamepad > .stick::after {
   left: 54px;
   top: 54px;
   right: 54px;
   bottom: 54px;
 }
 
-.buttons > .stick-1 {
+.gamepad > .stick-0 {
   left: 286px;
   top: 243px;
 }
-.buttons > .stick-2 {
+.gamepad > .stick-2 {
   left: 495px;
   top: 243px;
 }

@@ -1,231 +1,25 @@
 <!DOCTYPE html>
-<!--
-  Copyright 2012 Google Inc. All Rights Reserved.
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Steampads</title>
+    <script src='poly_raf.js'></script>
+    <script src='gp.js'></script>
+</head>
+<body>
+    <div id='no-gamepad-support'>
+        Your browser does not seem to support Gamepad API, or it might be
+        we�re not detecting it very well. Sorry!
+    </div>
+    <div id='no-gamepads-connected'>
+        No gamepads seem to be connected. Be sure to plug in a gamepad and then
+        press any of its buttons to activate it.
+    </div>
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-
-  @author mwichary@google.com (Marcin Wichary)
--->
-<title>Gamepad API tester</title>
-<meta charset='utf-8'>
-<script src='gamepad.js'></script>
-
-<div id='no-gamepad-support'>
-  Your browser does not seem to support Gamepad API, or it might be
-  we�re not detecting it very well. Sorry!
-</div>
-<div id='no-gamepads-connected'>
-  No gamepads seem to be connected. Be sure to plug in a gamepad and then
-  press any of its buttons to activate it.
-</div>
-
-<div class="gamepad">
-	<div class='buttons'>
-		<div class='face button-0'></div>
-		<div class='face button-1'></div>
-		<div class='face button-2'></div>
-		<div class='face button-3'></div>
-
-		<div class='top-shoulder button-left-shoulder-top button-4'></div>
-		<div class='top-shoulder button-right-shoulder-top button-5'></div>
-		<div class='bottom-shoulder button-left-shoulder-bottom button-6'></div>
-		<div class='bottom-shoulder button-right-shoulder-bottom button-7'></div>
-
-		<div class='select-start button-select button-8'></div>
-		<div class='select-start button-start button-9'></div>
-
-		<div class='stick stick-0 stick-1 button-10'></div>
-		<div class='stick stick-2 stick-3 button-11'></div>
-
-		<div class='face button-dpad-top button-12'></div>
-		<div class='face button-dpad-bottom button-13'></div>
-		<div class='face button-dpad-left button-14'></div>
-		<div class='face button-dpad-right button-15'></div>
-	</div>
-	<div class='index'></div>
-</div>
-<script>
-// Global variables starts here
-// DO NOT TOUCH
-var gamepads = lib_gp_helper.getAllGamepads(); // Get all gamepads if we need to debug something or do polling
-var axis_prevVal = [];
-// DO NOT TOUCH, UNLESS YOU DO WANT TO
-var STICK_OFFSET = 25;
-var ANALOGUE_BUTTON_THRESHOLD = .5;
-// DO TOUCH
-var gamepad_min_delta = 0.01; // Minimum move distance to trigger visual update
-var gamepad_type = "";
-var gamepad_style = "";
-var gamepad_index =  0;
-
-// Helpers
-var rAF = window.mozRequestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.requestAnimationFrame;
-
-//noinspection JSUnresolvedVariable
-var rAFStop = window.mozCancelRequestAnimationFrame ||
-  window.webkitCancelRequestAnimationFrame ||
-  window.cancelRequestAnimationFrame;
-
-// Events starts here
-window.addEventListener("gamepadconnected", function() {
-	if(gamepads[gamepad_index]) {
-		var gp = gamepads[gamepad_index];
-		//noinspection JSUnresolvedVariable
-        console.log("Gamepad connected at index " + gp.index + ": " + gp.id + ". It has " + gp.buttons.length + " buttons and " + gp.axes.length + " axes.");
-		gameLoop();
-	}
-});
-
-window.addEventListener("gamepaddisconnected", function() {
-	if(gamepads[gamepad_index]) {
-		console.log("Waiting for gamepad.");
-		rAFStop();
-	}
-});
-
-// Functions starts here
-/**
-* Handle GET's. Also sets a defaults CSS
-*/
-function SetParams() {
-	if(lib_gp_helper.Requests("ID")) // Refers to gamepad's API gamepad.index
-		gamepad_index = lib_gp_helper.Requests("ID");
-    if(lib_gp_helper.Requests("type"))
-        gamepad_type = (lib_gp_helper.Requests("type"));
-    else
-        gamepad_type = "generic"; // TODO; Remove when finished dev
-        //gamepad_type = lib_gp_helper.getGamepadType(gamepads[gamepad_index].id); // Figure it out if we can
-	if(lib_gp_helper.Requests("deadzone"))
-		gamepad_min_delta = lib_gp_helper.Requests("deadzone");
-	if(lib_gp_helper.Requests("style"))
-		gamepad_style = lib_gp_helper.Requests("style");
-
-    lib_gp_helper.setTypeAndStyle(gamepad_type, gamepad_style);
-}
-
-/**
-* Poll all gamepads (if browser does not support gamepad events)
-* Rewrite to only poll wanted index
-*/
-function pollGamepads() {
-  for (var i = 0; i < gamepads.length; i++) {
-    var gp = gamepads[i];
-    if(gp) {
-      //noinspection JSUnresolvedVariable
-        console.log("Gamepad connected at index " + gp.index + ": " + gp.id + ". It has " + gp.buttons.length + " buttons and " + gp.axes.length + " axes.");
-      gameLoop();
-      clearInterval(interval);
-    }
-  }
-}
-
-/**
-* Update all buttons and axis.
-*/
-function gameLoop() {
-    gamepads = lib_gp_helper.getAllGamepads(); // Important to update gamepads first thing every tick
-    if (!gamepads)
-        return;
-    var gp = gamepads[gamepad_index];
-    //noinspection JSDuplicatedDeclaration
-    for (var i = 0; i <= gp.buttons.length; i++) {
-        updateButton(gp.buttons[i], i)
-    }
-    //noinspection JSDuplicatedDeclaration,JSUnresolvedVariable
-    for (var i = 0; i <= gp.axes.length; i++) {
-        //noinspection JSUnresolvedVariable
-        updateAxis(gp.axes[i], i)
-    }
-    rAF(gameLoop);
-}
-
-/**
-* Update a given button on the screen.
-*/
-function updateButton(button, id) {
-    // TODO; Update to support analog buttons
-	var value, pressed;
-
-	// Older version of the gamepad API provided buttons as a floating point
-	// value from 0 to 1. Newer implementations provide GamepadButton objects,
-	// which contain an analog value and a pressed boolean.
-	if (typeof(button) == 'object') {
-		value = button.value;
-		//noinspection JSUnresolvedVariable
-        pressed = button.pressed;
-	} else {
-		value = button;
-		pressed = button > ANALOGUE_BUTTON_THRESHOLD;
-	}
-
-	// Update the button visually.
-	var buttonEl = document.querySelector('.button-' + id);
-	if (buttonEl) { // Extraneous buttons have just a label.
-		if (pressed) {
-			//console.log("pressed button" + id)
-			buttonEl.classList.add('pressed');
-		} else {
-			buttonEl.classList.remove('pressed');
-		}
-	}
-}
-
-/**
-* Update a given analogue axis on the screen.
-*/
-function updateAxis(value, stickId) {
-    if(!axis_prevVal[stickId])
-            axis_prevVal[stickId] = 0;
-    var dV = axis_prevVal[stickId] + gamepad_min_delta; // Check positive
-    var dnV = axis_prevVal[stickId] - gamepad_min_delta; // Check negative
-
-    if(value > dV || value < dnV) { // If value is greater than minimum
-        axis_prevVal[stickId] = value;
-        // Every even stick is horizontal
-        if (stickId % 2) {
-            var horizontal = true
-        }
-
-        var stickEl = document.querySelector('.stick-' + stickId);
-        if (stickEl) {
-            var offsetVal = value * STICK_OFFSET;
-            if (!horizontal) {
-                stickEl.style.marginLeft = offsetVal + 'px';
-            } else {
-                stickEl.style.marginTop = offsetVal + 'px';
-            }
-        }
-    }
-}
-
-// Program starts here
-console.log("init");
-SetParams();
-
-if(!('GamepadEvent' in window)) {
-  console.log("no gamepad events available");
-  // Browser does not support gamepad events, poll instead.
-  var interval = setInterval(pollGamepads, 500);
-} else {
-	// Browser supports gamepad events.
-	console.log("gamepad events available")
-}
-
-if (gamepads[0] !== undefined) { // Refresh does not redefine gamepads. (fixes refreshing page bug)
-	console.log("gamepads already connected");
-	gameLoop();
-}
+    <div class="gamepad">
+    </div>
+</body>
+<script type="text/javascript">
+    lib_gp._init();
 </script>
+</html>
