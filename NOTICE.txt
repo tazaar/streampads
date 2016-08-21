@@ -1,0 +1,10 @@
+=================================================================
+==  NOTICE file for use with the Apache License, Version 2.0,  ==
+=================================================================
+
+Streampads Gamepad viewer
+Copyright 2016 Johan Englund
+
+This software contains polyfill code written by Opera engineer Erik Möller.
+
+The author credits Marcin Wichary from Google for his article "Jumping the Hurdles with the Gamepad API" as inspiration

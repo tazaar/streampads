@@ -1,0 +1,27 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:200,400,500';
+
+body {
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    background: rgb(240, 240, 240);
+}
+
+/* Error messages. */
+
+#no-gamepads-connected,
+#no-gamepad-support {
+    font-family: Roboto, Arial;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 200;
+    text-align: center;
+    padding: 100px 50px;
+    display: none;
+}
+#no-gamepad-support.visible {
+    display: block;
+}
+#no-gamepads-connected.visible {
+    display: block;
+}

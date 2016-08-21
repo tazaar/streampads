@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Steampads</title>
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Polyfills until all the browsers unite -->
     <script src='poly_raf.js'></script>
+    <script src='poly_endsWith.js'></script>
+    <!-- End of polyfills -->
+    <script src='lib_gp_html.js'></script>
     <script src='gp.js'></script>
+
 </head>
 <body>
     <div id='no-gamepad-support'>
@@ -16,10 +22,10 @@
         press any of its buttons to activate it.
     </div>
 
-    <div class="gamepad">
+    <div class="gamepad" id="gamepad">
     </div>
 </body>
 <script type="text/javascript">
-    lib_gp._init();
+    lib_gp.init();
 </script>
 </html>
